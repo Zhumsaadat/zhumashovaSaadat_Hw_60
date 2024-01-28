@@ -1,16 +1,24 @@
 import React from 'react';
+import { Message } from '../../../../types';
+import dayjs from 'dayjs';
 
-const MessageItem: React.FC = () => {
+interface Props  {
+    message: Message
+}
+
+const MessageItem: React.FC<Props> = ({message}) => {
+    const data = dayjs(message.datetime).format('DD.MM.YYYY HH:mm')
+
     return (
         <>
-            <div className="border border-black p-2">
+            <div className="border border-black p-2 m-2">
                 <div className="toast-header">
-                    <strong className="me-auto">автор</strong>
-                    <small className="text-muted">дата</small>
+                    <strong className="me-auto">{message.author}</strong>
+                    <small className="text-muted">{data}</small>
                 </div>
                 <hr/>
                 <div className="toast-body">
-                    смс
+                    {message.message}
                 </div>
             </div>
 

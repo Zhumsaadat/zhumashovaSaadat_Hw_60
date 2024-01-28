@@ -1,10 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MessageForm from './components/MessageForm/MessageForm';
 import MessageBlog from './components/MessageBlog/MessageBlog';
+import { Message } from '../types';
 
 function App() {
+        const [messages, setMessages] = useState([]);
+        const url = 'http://146.185.154.90:8000/messages';
+
+        useEffect(() => {
+            const fetchData = async () => {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const messagesDate: Message[] = await response.json();
+                    setMessages(messagesDate);
+                }
+            };
+        void  fetchData();
+    }, []);
+
 
   return (
     <>
@@ -15,7 +30,7 @@ function App() {
       </div>
 
         <MessageForm/>
-        <MessageBlog/>
+        <MessageBlog messages={messages}/>
     </>
   )
 }
