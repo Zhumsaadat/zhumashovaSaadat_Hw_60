@@ -11,7 +11,7 @@ const MessageItem: React.FC<Props> = ({message}) => {
 
     return (
         <>
-            <div className="border border-black p-2 m-2">
+            <div className="shadow p-3 mb-5 bg-body-tertiary rounded p-2 m-2">
                 <div className="toast-header">
                     <strong className="me-auto">{message.author}</strong>
                     <small className="text-muted">{data}</small>
