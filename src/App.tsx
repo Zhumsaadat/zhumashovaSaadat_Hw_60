@@ -5,23 +5,46 @@ import MessageForm from './components/MessageForm/MessageForm';
 import MessageBlog from './components/MessageBlog/MessageBlog';
 import { Message } from '../types';
 
-function App() {
+function App () {
         const [messages, setMessages] = useState([]);
         const url = 'http://146.185.154.90:8000/messages';
+        let lastDate = '';
 
         useEffect(() => {
             const fetchData = async () => {
                 const response = await fetch(url);
                 if (response.ok) {
                     const messagesDate: Message[] = await response.json();
-                    setMessages(messagesDate);
+                    await setMessages(messagesDate);
+                    lastDate = messagesDate[messagesDate.length - 1].datetime;
                 }
             };
         void  fetchData();
+            const intervalId = setInterval(async () => {
+                try {
+                    let lastMessageUrl = 'http://146.185.154.90:8000/messages?datetime=' + lastDate;
+                    const response = await fetch(lastMessageUrl);
+                    if (response.ok) {
+                        const newMessageArray = await response.json();
+
+                        if (newMessageArray.length !== 0 && newMessageArray.length !== undefined) {
+                            setMessages(prevState => {
+                                return [...prevState, ...newMessageArray];
+                            } )
+                            lastDate = newMessageArray.datetime;
+                        }
+                    };
+
+                } catch (e) {
+                    alert('Ошибка при периодической загрузке сообщений. Error: ' + e);
+                }
+            }, 5000);
+            return () => clearInterval(intervalId);
     }, []);
 
 
-  return (
+
+    return (
     <>
       <div className="bg-light">
         <div className="container text-center">
@@ -29,7 +52,7 @@ function App() {
         </div>
       </div>
 
-        <MessageForm/>
+        <MessageForm messages={messages}/>
         <MessageBlog messages={messages}/>
     </>
   )
