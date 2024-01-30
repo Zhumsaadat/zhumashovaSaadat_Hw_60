@@ -6,15 +6,15 @@ interface Props {
     messages: Message[];
 }
 
-const MessageBlog:React.FC<Props> = ({messages}) => {
+const MessageBlog: React.FC<Props> = ({messages}) => {
     return (
         <>
-       <div className="messageBlog">
-           <h3>Messages</h3>
-           {messages.map((message, index) => {
-              return <MessageItem key={index} message={message}/>
-           })}
-       </div>
+            <div className="messageBlog">
+                <h3>Messages</h3>
+                {messages.map((message, index) => {
+                    return <MessageItem key={index} message={message}/>;
+                })};
+            </div>
         </>
     );
 };

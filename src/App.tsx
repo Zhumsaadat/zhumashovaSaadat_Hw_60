@@ -31,7 +31,7 @@ function App () {
                             setMessages(prevState => {
                                 return [...prevState, ...newMessageArray];
                             } )
-                            lastDate = newMessageArray.datetime;
+                            lastDate = newMessageArray[newMessageArray.length - 1].datetime;
                         }
                     };
 
