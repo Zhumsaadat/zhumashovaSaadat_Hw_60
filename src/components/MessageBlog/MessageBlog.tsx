@@ -12,8 +12,8 @@ const MessageBlog: React.FC<Props> = ({messages}) => {
             <div className="messageBlog">
                 <h3>Messages</h3>
                 {messages.map((message, index) => {
-                    return <MessageItem key={index} message={message}/>;
-                })};
+                    return <MessageItem key={index} message={message}/>
+                })}
             </div>
         </>
     );
